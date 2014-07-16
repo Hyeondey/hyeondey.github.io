@@ -59,7 +59,7 @@ function secondpage()
 		addComment(s,i,k,j);
 }
 function addComment(s,i,k,j) {
-    for (var i = k; i < j; i++) {
+    for (i = k; i < j; i++) {
          document.write(s.review[i].article);
     }
 }

@@ -1,33 +1,27 @@
 {
-    "review": [
+    review: [
 	{
-		"article":"
-		anonymous:
-		This site is Very good!"
+		"user":"anonymous"
+		"article":"This site is Very good!"
     }, {
-        "article":"
-		anonymous:
-		若你再批这个网站，请给100分" 
+		"user":"lily"
+        "article":"若你再批这个网站，请给100分" 
     }, {
+		"user":"anonymous3"
         "article":"
-		anonymous:
 		YA FEEL SO GOOOD!!!"
     }, {
-        "article":"
-		anonymous:
-		;) Israel loves peace"
+		"user":"anonymous2"
+        "article":";) Israel loves peace"
     }, {
-        "article":"
-		anonymous:
-		HAMAS loves peace"
+		"user":"sopia"
+        "article":"HAMAS loves peace"
     }, {
-		"article":"
-		anonymous:
-		We are the Champion of world~"
+		"user":"james"
+		"article":"We are the Champion of world~"
 	}, {
-		"article":"
-		anonymous:
-		Germany will achive worldcup of 2014!"
+		"user":"peter"
+		"article":"Germany will achive worldcup of 2014!"
 	}
 	]
 }

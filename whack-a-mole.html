@@ -1,0 +1,230 @@
+<html>
+<head>
+<title>::Whack-a-mole！</title>
+<script>
+var len = document.title.length;
+var currentMole = 0;
+
+var MoleInterval, MoleUpInterval; // 두더지와 두더지 사이의 시간간격, 두더지가 올라온 시간
+var MoleIntervalTime; // MoleInterval의 타이머
+var MoleUpIntervalTime; // MoleUpInterval의 타이머
+
+//var startMole;
+
+var Level = 5; // 레벨
+var MoleNumber = Level*10; // 두더지 수
+var Score = 0; // 점수
+var MoleHits = 0; // 맞춘 두더지 수
+var combo = 0; // 연속적으로 맞춘 두더지 수
+var combomax = 0; // 최대 combo
+var comboscore = 0; // combo에 따라 추가되는 점수
+var PreMoleNum = 0; // 최근에 맞춘 두더지의 번호(몇번째)
+var MoleCount = 0; // 현재 두더지의 번호
+
+
+keypadCode = new Array( 450, 35, 40, 34, 37, 12, 39, 36, 38, 33 );
+
+
+
+function init()
+{
+    val = document.all.startbtn.value;
+    if ( val == "start!" )
+        start();
+    else
+        stop();
+}
+
+// 初始化变量开始游戏
+function start()
+{
+    MoleCount = 0;
+    PreMoleNum = 0;
+    comboscore = 0;
+    combomax = 0;
+    combo = 0;
+    MoleHits = 0;
+    Score = 0;
+    
+    alert("Press Enter to start!");
+  
+    document.all.startbtn.value = "stop!";
+
+    str = "Combo : "+ combo +"("+ combomax +")\n  Score : "+ Score;
+    str += "\nHits : "+ MoleHits +" / "+ MoleCount;
+    document.all.scoreboard.innerText = str;
+    combomax = 1;
+
+
+    // 실제 게임이 작동하는 부분으로 1초뒤에 시작함.
+    startMole = setTimeout("scrollStatus()", 1000);
+    
+}
+
+// 게임을 중지하고 점수를 초기화함.
+function stop()
+{
+
+    clearTimeout(MoleInterval);
+
+    MoleCount = 0;
+    PreMoleNum = 0;
+    comboscore = 0;
+    combomax = 0;
+    combo = 0;
+    MoleHits = 0;
+    Score = 0;
+
+    str = "Combo : "+ combo +"("+ combomax +")\n  Score : "+ Score;
+    str += "\nHits : "+ MoleHits +" / "+ MoleCount;
+    document.all.scoreboard.innerText = str;
+
+    document.all.startbtn.value = "start!";
+}
+
+// 실제로 동작되는 부분
+function scrollStatus()
+{
+    MoleCount++;
+    var s1, s2, str;
+
+    s2 = document.title.charAt(0);
+    s1 = document.title.substring(1, len);
+        
+    document.title = s1 + s2; // 브라우저의 타이틀바를 움직이게함
+    
+    currentMole = Math.floor(Math.random()*9)+1; // 1 ~ 9 : 두더지의 위치
+    MoleUpIntervalTime = Math.floor(Math.random()*31 +30)*10; // 300ms ~ 600ms : 
+    MoleIntervalTime = MoleUpIntervalTime + 100 + Math.floor(Math.random()*15)*100; // 
+    str = "MoleCount : "+ MoleCount +"\n";
+
+    document.all.molecnt.innerText = str;
+
+    moleUp();
+        
+    if ( MoleCount != MoleNumber )
+        MoleInterval = setTimeout("scrollStatus()", MoleIntervalTime);
+}
+
+// 두더지가 올라왔을때
+function moleUp()
+{
+    pos = keypadCode[ currentMole ] +"c";
+    document.all[pos].innerHTML = "(O_O)";
+
+    // 올라온 시간이 지나면 두더지를 내린다.
+    MoleUpInterval = setTimeout("moleDown()", MoleUpIntervalTime);
+}
+
+// 두더지가 내려왔을때
+function moleDown()
+{
+    pos = keypadCode[ currentMole ] +"c";
+    currentMole = 0;
+    document.all[pos].innerHTML = " ";
+    document.all[pos].style.color = "";
+    document.all[pos].style.background = "";
+}
+
+// 두더지를 맞췄을때
+function isHit(pos)
+{
+    document.all[pos].innerHTML = "(>o<)";
+    document.all[pos].style.color = "red";
+    document.all[pos].style.background = "yellow";
+    
+    MoleHits++;
+
+    if ( PreMoleNum+1 == MoleCount ) // 연속맞춤일경우 콤보점수계산
+    {
+        comboscore += ++combo;
+        if ( combo > combomax ) combomax = combo; // 최대콤보 수정
+    }
+    else
+        comboscore = combo = 1;
+
+    PreMoleNum = MoleCount;
+    Score += comboscore;
+    
+    str = "Combo : "+ combo +"("+ combomax +")\n  Score : "+ Score;
+    str += "\nHits : "+ MoleHits +" / "+ MoleNumber;
+    document.all.scoreboard.innerText = str;
+
+}
+
+// 按键时
+function hammer()
+{
+    var molePos = event.keyCode;
+
+    if ( currentMole == molePos-96 && currentMole != 0 ) // NumLock is on
+    {
+        pos = keypadCode[ molePos-96 ] +"c";
+        isHit(pos);
+    }
+    else if ( currentMole == findEl(molePos) ) // NumLock is off
+    {
+        pos = molePos +"c";
+        isHit(pos);
+    }
+    
+    
+}
+
+// 쓰이지 않는 함수: 임시
+function hammer2()
+{
+    var molePos = event.keyCode;
+    
+    if ( 97 <= molePos && molePos <= 105 ) // 키패드의 NumLock on
+    {
+        pos = keypadCode[ molePos-96 ];
+        document.all[pos+"c"].style.color = "red";
+    }
+    else
+    {
+        if (findEl(molePos) != 10)
+            document.all[molePos+"c"].style.color = "red";
+    }
+}
+
+
+function findEl(el)
+{
+    ret = 10;
+    for ( i=0; i<10; i++ )
+        if ( keypadCode[i] == el ) ret = i;
+    
+    return ret;
+}
+        
+
+</script>
+</head>
+<body style="cursor:default" onselectstart="event.returnValue=false" onkeydown="hammer()">
+
+<table border="1" style="font:bold 20pt tahoma;text-align:center">
+<tr>
+  <td id="36c" width="120" height="120"> </td><td id="38c" width="120"> </td><td id="33c" 
+width="120"> </td>
+  <td width="200" rowspan="3" style="font:12pt tahoma">
+    <div id="molecnt"> </div>
+    <div id="scoreboard"> </div>
+    <input id="startbtn" type="button" value="start!" onclick="init();window.focus();">
+  </td>
+</tr>
+<tr>
+  <td id="37c" height="120"> </td><td id="12c"> </td><td id="39c"> </td>
+</tr>
+<tr>
+  <td id="35c" height="120"> </td><td id="40c"> </td><td id="34c"> </td>
+</tr>
+<!--tr>
+  <td id="45c" height="100" colspan="3" style="font:12pt tahoma"> </td>
+</tr-->
+</table><br>
+
+<div style="font: 10pt tahoma, verdana; background: white; padding-top: 3; border-top: 1 solid 
+black"
+</body>
+</html>
