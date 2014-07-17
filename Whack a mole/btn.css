@@ -1,0 +1,18 @@
+.btn:visited { 
+    color: #000000; 
+    font-weight: normal; 
+    background-color: #CCCCCC; 
+    border-style: outset; 
+} 
+.btn:hover { 
+    font-weight: bold; 
+    color: #FFFFFF; 
+    background-color: #999999; 
+    border-style: outset; 
+} 
+.btn:active { 
+    font-weight: bold; 
+    color: #FFFFFF; 
+    background-color: #666666; 
+    border-style: inset; 
+}

@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Whack-a-mole!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<link rel="stylesheet" type="text/css" href="btn.css">
+<style type="text/css">
+.btn {
+}
+</style>
+<script src="js.js"></script>
+<script>
+
+function openwin(url) { 
+window.open (url, "newwindow", "height=400, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no") 
+}
+function randomColor()
+{
+        return "rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.random()+")";
+}
+</script>
+</head>
+
+<body  style="background-image:url('bg1.jpg');background-repeat:no-repeat;text-align:center;cursor:default; onselectstart="event.returnValue=false" onkeydown="hammer()">
+
+<table border="1" style="font:bold 20pt tahoma;text-align:center">
+<tr>
+  <td id="36c" width="120" height="120"> </td><td id="38c" width="120"> </td><td id="33c" 
+width="120"> </td>
+  <td width="200" rowspan="3" style="font:12pt tahoma">
+    
+    <div id="molecnt"> </div>
+    <div id="scoreboard"> </div>
+    <input  class="btn" id="startbtn" type="button" value="start!" onclick="init();window.focus();"   >
+    <input class="btn" id="help" type="button" value="help!" onclick='openwin("help.html");'>
+    
+  </td>
+</tr>
+<tr>
+  <td id="37c" height="120"> </td><td id="12c"> </td><td id="39c"> </td>
+</tr>
+<tr>
+  <td id="35c" height="120"> </td><td id="40c"> </td><td id="34c"> </td>
+</tr>
+<!--tr>
+  <td id="45c" height="100" colspan="3" style="font:12pt tahoma"> </td>
+</tr-->
+</table><br>
+
+</body>
+</html>
