@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: Candara, "Trebuchet MS", sans-serif;
+	font-size: 11pt;
+	color: #FFFFFF;
+	padding: 0px;
+	text-align: center;
+	background-color: #708090;
+}
+#grid {
+	border: 1px solid #708090;
+}
+#header
+{
+	padding: 0.5em;
+}
